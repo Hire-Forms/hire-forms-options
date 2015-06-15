@@ -2,7 +2,10 @@
   "name": "hire-forms-options",
   "version": "1.0.0",
   "description": "",
-  "main": "index.jsx",
+  "main": "index.js",
+  "scripts": {
+    "start": "babel index.jsx --watch --plugins object-assign --out-file index.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/Hire-Forms/hire-forms-options.git"
@@ -13,23 +16,10 @@
     "url": "https://github.com/Hire-Forms/hire-forms-options/issues"
   },
   "homepage": "https://github.com/Hire-Forms/hire-forms-options",
-  "browserify": {
-    "transform": [
-      [
-        "babelify",
-        {
-          "plugins": [
-            "object-assign"
-          ]
-        }
-      ]
-    ]
-  },
   "devDependencies": {
     "babel-core": "^5.5.8",
     "babel-plugin-object-assign": "^1.1.0",
-    "babelify": "^6.1.2",
-    "hire-forms-prop-types": "^1.0.0"
+    "babelify": "^6.1.2"
   },
   "dependencies": {
     "classnames": "^2.1.2",
