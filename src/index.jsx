@@ -1,7 +1,8 @@
 import React from "react";
 import cx from "classnames";
 
-import {arrayOfKeyValue, stringOrArrayOfString} from "hire-forms-prop-types";
+import {keyValueMapOrArrayOfKeyValueMaps, arrayOfKeyValueMaps} from "hire-forms-prop-types";
+import {castArray} from "hire-forms-utils";
 
 const HIGHTLIGHT_CLASS = "highlight";
 
@@ -170,9 +171,7 @@ class Options extends React.Component {
 				displayValue = data.value.replace(re, "<span class=\"highlight\">$&</span>");
 			}
 
-			let selectedValue = (Array.isArray(this.props.value)) ?
-				this.props.value :
-				[this.props.value];
+			let selectedValue = castArray(this.props.value)
 
 			return (
 				<li
@@ -209,8 +208,8 @@ Options.propTypes = {
 	onChange: React.PropTypes.func.isRequired,
 	query: React.PropTypes.string,
 	sortRelevance: React.PropTypes.bool,
-	value: stringOrArrayOfString,
-	values: arrayOfKeyValue
+	value: keyValueMapOrArrayOfKeyValueMaps,
+	values: arrayOfKeyValueMaps
 };
 
 export default Options;

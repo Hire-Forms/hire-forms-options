@@ -47,6 +47,76 @@ var arrayOfStringOrArrayOfKeyValue = _react2["default"].PropTypes.oneOfType([_re
 exports.arrayOfStringOrArrayOfKeyValue = arrayOfStringOrArrayOfKeyValue;
 
 },{"react":"react"}],2:[function(require,module,exports){
+
+/*
+ * @param {Array} list
+ * @returns {Boolean}
+ */
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.isListOfStrings = isListOfStrings;
+exports.isKeyValueMap = isKeyValueMap;
+exports.castArray = castArray;
+exports.castKeyValueArray = castKeyValueArray;
+
+function isListOfStrings(list) {
+	if (!Array.isArray(list) || !list.length) {
+		return false;
+	}
+
+	return list.every(function (item) {
+		return typeof item === "string";
+	});
+}
+
+/*
+ * @param {Object} map
+ * @returns {Boolean}
+ */
+
+function isKeyValueMap(map) {
+	if (map == null) {
+		return false;
+	}
+
+	return map.hasOwnProperty("key") && map.hasOwnProperty("value");
+}
+
+/*
+ * Always return an array.
+ *
+ * @param {String|Array} arr
+ * @returns {Array}
+ */
+
+function castArray(arr) {
+	return Array.isArray(arr) ? arr : [arr];
+}
+
+;
+
+/*
+ * Always return an array of key/value maps.
+ *
+ * @param {Number|String|Boolean|Array} list
+ * @returns {Array} Array of key value maps, ie: [{key: "A", value: "A"}, {key: "B", value: "B"}, ...]
+ */
+
+function castKeyValueArray(list) {
+	list = castArray(list);
+
+	return list.map(function (item) {
+		return isKeyValueMap(item) ? item : {
+			key: item,
+			value: item
+		};
+	});
+}
+
+},{}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -70,6 +140,8 @@ var _classnames = require("classnames");
 var _classnames2 = _interopRequireDefault(_classnames);
 
 var _hireFormsPropTypes = require("hire-forms-prop-types");
+
+var _hireFormsUtils = require("hire-forms-utils");
 
 var HIGHTLIGHT_CLASS = "highlight";
 
@@ -265,7 +337,7 @@ var Options = (function (_React$Component) {
 					displayValue = data.value.replace(re, "<span class=\"highlight\">$&</span>");
 				}
 
-				var selectedValue = Array.isArray(_this2.props.value) ? _this2.props.value : [_this2.props.value];
+				var selectedValue = (0, _hireFormsUtils.castArray)(_this2.props.value);
 
 				return _react2["default"].createElement("li", {
 					className: (0, _classnames2["default"])({ selected: selectedValue.indexOf(data.value) > -1 }),
@@ -301,12 +373,12 @@ Options.propTypes = {
 	onChange: _react2["default"].PropTypes.func.isRequired,
 	query: _react2["default"].PropTypes.string,
 	sortRelevance: _react2["default"].PropTypes.bool,
-	value: _hireFormsPropTypes.stringOrArrayOfString,
-	values: _hireFormsPropTypes.arrayOfKeyValue
+	value: _hireFormsPropTypes.keyValueMapOrArrayOfKeyValueMaps,
+	values: _hireFormsPropTypes.arrayOfKeyValueMaps
 };
 
 exports["default"] = Options;
 module.exports = exports["default"];
 
-},{"classnames":"classnames","hire-forms-prop-types":1,"react":"react"}]},{},[2])(2)
+},{"classnames":"classnames","hire-forms-prop-types":1,"hire-forms-utils":2,"react":"react"}]},{},[3])(3)
 });

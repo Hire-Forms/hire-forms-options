@@ -22,10 +22,12 @@
     "babel-plugin-object-assign": "^1.1.0",
     "babelify": "^6.1.2",
     "hi-bump": "^1.0.0",
+    "react": "^0.13.3",
     "watchify": "^3.2.2"
   },
   "dependencies": {
-    "hire-forms-prop-types": "^1.0.0"
+    "hire-forms-prop-types": "^2.0.0",
+    "hire-forms-utils": "^1.1.0"
   },
   "peerDependencies": {
     "classnames": "^2.1.2",
