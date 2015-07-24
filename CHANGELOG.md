@@ -1,3 +1,8 @@
+### v1.0.5	(2015/7/24 22:20)
+* Add tests
+* Refactor to make some methods pure
+* Replace testdom with jsdom5
+
 ### v1.0.4	(2015/7/23 17:37)
 * Bump hi-bump
 
