@@ -1,10 +1,11 @@
+// TODO move listitem to seperate component (so we don't have to store data-key and data-value as attributes)
+// Move util functions to seperate module
+
 import React from "react";
 import cx from "classnames";
 
 import {keyValueMapOrArrayOfKeyValueMaps, arrayOfKeyValueMaps} from "hire-forms-prop-types";
 import {castArray} from "hire-forms-utils";
-
-const HIGHTLIGHT_CLASS = "highlight";
 
 /**
  * Options are rendered beneath the autocomplete and select components.
@@ -27,19 +28,20 @@ class Options extends React.Component {
 	}
 
 	/**
-	 * Sort props.values on relevance. A result is more relevant
-	 * when the search query is more at the beginning of the string.
+	 * Sort values on relevance. A result is more relevant when the search
+	 * query is more at the beginning of the string. In other words:
 	 * String.indexOf(props.query): lower is better.
-	 *
-	 * @returns {Array<String>} Sorted values on relevance
+	 * @param {Array<Object>} value An array of key/value maps
+	 * @param {String} query A search query
+	 * @returns {Array<Object>} Sorted values on relevance
 	 */
-	sortRelevance(values) {
+	sortRelevance(values, query) {
 		return values.sort((a, b) => {
 			a = a.value.toLowerCase();
 			b = b.value.toLowerCase();
 
-			let indexA = a.indexOf(this.props.query);
-			let indexB = b.indexOf(this.props.query);
+			let indexA = a.indexOf(query);
+			let indexB = b.indexOf(query);
 
 			if (indexA > indexB) {
 				return 1;
@@ -63,29 +65,36 @@ class Options extends React.Component {
 		});
 	}
 
-	highlight(target) {
+	/*
+	 * highlight the currently highlighted option.
+	 *
+	 * @param {Object} target An HTMLElement or event object
+	 * @param {String} className Name of the highlight class
+	 */
+	highlight(target, className) {
 		// Check if target is an event object.
 		if (target.hasOwnProperty("currentTarget")) {
 			target = target.currentTarget;
 		}
 
-		target.classList.add(HIGHTLIGHT_CLASS);
+		target.classList.add(className);
 	}
 
 	/**
 	 * Unhighlight the currently highlighted option.
 	 *
-	 *
+	 * @param {String} className Name of the highlight class
+	 * @return {Object} The unhighlighted HTMLElement
 	 */
-	unhighlight() {
+	unhighlight(className) {
 		let el;
 		let node = React.findDOMNode(this);
 
 		if (node) {
-			el = node.querySelector("li.highlight");
+			el = node.querySelector(`li.${className}`);
 
 			if (el) {
-				el.classList.remove(HIGHTLIGHT_CLASS);
+				el.classList.remove(className);
 			}
 		}
 
@@ -98,7 +107,7 @@ class Options extends React.Component {
 
 	highlightPrev() {
 		let prev;
-		let current = this.unhighlight();
+		let current = this.unhighlight(this.props.highlightClass);
 
 		if (current) {
 			prev = current.previousElementSibling;
@@ -111,13 +120,13 @@ class Options extends React.Component {
 			prev = React.findDOMNode(this).lastChild;
 		}
 
-		this.highlight(prev);
+		this.highlight(prev, this.props.highlightClass);
 	}
 
 
 	highlightNext() {
 		let next;
-		let current = this.unhighlight();
+		let current = this.unhighlight(this.props.highlightClass);
 
 		if (current) {
 			next = current.nextElementSibling;
@@ -130,11 +139,11 @@ class Options extends React.Component {
 			next = React.findDOMNode(this).firstChild;
 		}
 
-		this.highlight(next);
+		this.highlight(next, this.props.highlightClass);
 	}
 
 	select() {
-		let current = this.unhighlight();
+		let current = this.unhighlight(this.props.highlightClass);
 
 		if (current) {
 			this.props.onChange(this.getOptionData(current));
@@ -159,8 +168,8 @@ class Options extends React.Component {
 			return null;
 		}
 
-		let values = (this.props.sortRelevance) ?
-			this.sortRelevance(this.props.values) :
+		let values = (this.props.sortRelevance && (this.props.query !== "")) ?
+			this.sortRelevance(this.props.values, this.props.querySelector) :
 			this.props.values;
 
 		let listitems = values.map((data, index) => {
@@ -197,14 +206,16 @@ class Options extends React.Component {
 }
 
 Options.defaultProps = {
+	highlightClass: "highlight",
 	query: "",
 	sortRelevance: true,
-	value: "",
+	value: {key: "", value: ""},
 	values: []
 };
 
 
 Options.propTypes = {
+	highlightClass: React.PropTypes.string,
 	onChange: React.PropTypes.func.isRequired,
 	query: React.PropTypes.string,
 	sortRelevance: React.PropTypes.bool,
