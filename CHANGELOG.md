@@ -1,3 +1,8 @@
+### v1.1.1	(2015/7/27 17:15)
+* Fix test: add hire-forms-option class
+* Remove babel, which should be a global dep
+* Update readme
+
 ### v1.1.0	(2015/7/27 16:47)
 * Add travis config
 * Add sort prop
