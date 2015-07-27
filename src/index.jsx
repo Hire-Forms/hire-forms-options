@@ -7,6 +7,10 @@ import cx from "classnames";
 import {keyValueMapOrArrayOfKeyValueMaps, arrayOfKeyValueMaps} from "hire-forms-prop-types";
 import {castArray} from "hire-forms-utils";
 
+let hasKeyValue = function(list, item) {
+	return list.filter((li) => li.key === item.key).length > 0;
+};
+
 /**
  * Options are rendered beneath the autocomplete and select components.
  *
@@ -168,7 +172,7 @@ class Options extends React.Component {
 			return null;
 		}
 
-		let values = (this.props.sortRelevance && (this.props.query !== "")) ?
+		let values = (this.props.sort || (this.props.sortRelevance && (this.props.query !== ""))) ?
 			this.sortRelevance(this.props.values, this.props.querySelector) :
 			this.props.values;
 
@@ -180,18 +184,17 @@ class Options extends React.Component {
 				displayValue = data.value.replace(re, "<span class=\"highlight\">$&</span>");
 			}
 
-			let selectedValue = castArray(this.props.value)
-
 			return (
 				<li
-					className={cx({selected: selectedValue.indexOf(data.value) > -1})}
+					className={cx({
+						"hire-forms-option": true,
+						selected: hasKeyValue(castArray(this.props.value), data)
+					})}
 					dangerouslySetInnerHTML={{__html: displayValue}}
 					data-key={data.key}
 					data-value={data.value}
 					key={index}
-					onClick={this.handleClick.bind(this)}
-					onMouseEnter={this.highlight.bind(this)}
-					onMouseLeave={this.unhighlight.bind(this)}>
+					onClick={this.handleClick.bind(this)}>
 				</li>
 			);
 		});
@@ -208,6 +211,7 @@ class Options extends React.Component {
 Options.defaultProps = {
 	highlightClass: "highlight",
 	query: "",
+	sort: false,
 	sortRelevance: true,
 	value: {key: "", value: ""},
 	values: []
@@ -218,6 +222,7 @@ Options.propTypes = {
 	highlightClass: React.PropTypes.string,
 	onChange: React.PropTypes.func.isRequired,
 	query: React.PropTypes.string,
+	sort: React.PropTypes.bool,
 	sortRelevance: React.PropTypes.bool,
 	value: keyValueMapOrArrayOfKeyValueMaps,
 	values: arrayOfKeyValueMaps

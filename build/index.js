@@ -130,8 +130,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -150,6 +148,12 @@ var _hireFormsPropTypes = require("hire-forms-prop-types");
 
 var _hireFormsUtils = require("hire-forms-utils");
 
+var hasKeyValue = function hasKeyValue(list, item) {
+	return list.filter(function (li) {
+		return li.key === item.key;
+	}).length > 0;
+};
+
 /**
  * Options are rendered beneath the autocomplete and select components.
  *
@@ -158,13 +162,15 @@ var _hireFormsUtils = require("hire-forms-utils");
  */
 
 var Options = (function (_React$Component) {
-	_inherits(Options, _React$Component);
-
 	function Options() {
 		_classCallCheck(this, Options);
 
-		_get(Object.getPrototypeOf(Options.prototype), "constructor", this).apply(this, arguments);
+		if (_React$Component != null) {
+			_React$Component.apply(this, arguments);
+		}
 	}
+
+	_inherits(Options, _React$Component);
 
 	_createClass(Options, [{
 		key: "componentDidMount",
@@ -181,6 +187,8 @@ var Options = (function (_React$Component) {
 			var node = _react2["default"].findDOMNode(this);
 			node.style.zIndex = 0;
 		}
+	}, {
+		key: "sortRelevance",
 
 		/**
    * Sort values on relevance. A result is more relevant when the search
@@ -190,8 +198,6 @@ var Options = (function (_React$Component) {
    * @param {String} query A search query
    * @returns {Array<Object>} Sorted values on relevance
    */
-	}, {
-		key: "sortRelevance",
 		value: function sortRelevance(values, query) {
 			return values.sort(function (a, b) {
 				a = a.value.toLowerCase();
@@ -221,6 +227,8 @@ var Options = (function (_React$Component) {
 				return 0;
 			});
 		}
+	}, {
+		key: "highlight",
 
 		/*
    * highlight the currently highlighted option.
@@ -228,8 +236,6 @@ var Options = (function (_React$Component) {
    * @param {Object} target An HTMLElement or event object
    * @param {String} className Name of the highlight class
    */
-	}, {
-		key: "highlight",
 		value: function highlight(target, className) {
 			// Check if target is an event object.
 			if (target.hasOwnProperty("currentTarget")) {
@@ -238,6 +244,8 @@ var Options = (function (_React$Component) {
 
 			target.classList.add(className);
 		}
+	}, {
+		key: "unhighlight",
 
 		/**
    * Unhighlight the currently highlighted option.
@@ -245,8 +253,6 @@ var Options = (function (_React$Component) {
    * @param {String} className Name of the highlight class
    * @return {Object} The unhighlighted HTMLElement
    */
-	}, {
-		key: "unhighlight",
 		value: function unhighlight(className) {
 			var el = undefined;
 			var node = _react2["default"].findDOMNode(this);
@@ -313,6 +319,8 @@ var Options = (function (_React$Component) {
 				this.props.onChange(this.getOptionData(current));
 			}
 		}
+	}, {
+		key: "getOptionData",
 
 		/**
    * Get the key (id) and value (display name) of an option DOM element.
@@ -320,8 +328,6 @@ var Options = (function (_React$Component) {
    * @param {Object} el - Option DOM element
    * @returns {Object}
    */
-	}, {
-		key: "getOptionData",
 		value: function getOptionData(el) {
 			return {
 				key: el.getAttribute("data-key"),
@@ -337,7 +343,7 @@ var Options = (function (_React$Component) {
 				return null;
 			}
 
-			var values = this.props.sortRelevance && this.props.query !== "" ? this.sortRelevance(this.props.values, this.props.querySelector) : this.props.values;
+			var values = this.props.sort || this.props.sortRelevance && this.props.query !== "" ? this.sortRelevance(this.props.values, this.props.querySelector) : this.props.values;
 
 			var listitems = values.map(function (data, index) {
 				var displayValue = data.value;
@@ -347,17 +353,16 @@ var Options = (function (_React$Component) {
 					displayValue = data.value.replace(re, "<span class=\"highlight\">$&</span>");
 				}
 
-				var selectedValue = (0, _hireFormsUtils.castArray)(_this.props.value);
-
 				return _react2["default"].createElement("li", {
-					className: (0, _classnames2["default"])({ selected: selectedValue.indexOf(data.value) > -1 }),
+					className: (0, _classnames2["default"])({
+						"hire-forms-option": true,
+						selected: hasKeyValue((0, _hireFormsUtils.castArray)(_this.props.value), data)
+					}),
 					dangerouslySetInnerHTML: { __html: displayValue },
 					"data-key": data.key,
 					"data-value": data.value,
 					key: index,
-					onClick: _this.handleClick.bind(_this),
-					onMouseEnter: _this.highlight.bind(_this),
-					onMouseLeave: _this.unhighlight.bind(_this) });
+					onClick: _this.handleClick.bind(_this) });
 			});
 
 			return _react2["default"].createElement(
@@ -375,6 +380,7 @@ var Options = (function (_React$Component) {
 Options.defaultProps = {
 	highlightClass: "highlight",
 	query: "",
+	sort: false,
 	sortRelevance: true,
 	value: { key: "", value: "" },
 	values: []
@@ -384,6 +390,7 @@ Options.propTypes = {
 	highlightClass: _react2["default"].PropTypes.string,
 	onChange: _react2["default"].PropTypes.func.isRequired,
 	query: _react2["default"].PropTypes.string,
+	sort: _react2["default"].PropTypes.bool,
 	sortRelevance: _react2["default"].PropTypes.bool,
 	value: _hireFormsPropTypes.keyValueMapOrArrayOfKeyValueMaps,
 	values: _hireFormsPropTypes.arrayOfKeyValueMaps
