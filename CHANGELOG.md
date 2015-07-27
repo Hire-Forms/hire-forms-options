@@ -1,3 +1,7 @@
+### v1.1.0	(2015/7/27 16:47)
+* Add travis config
+* Add sort prop
+
 ### v1.0.5	(2015/7/24 22:20)
 * Add tests
 * Refactor to make some methods pure
