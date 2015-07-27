@@ -6,7 +6,8 @@
   "scripts": {
     "bump": "hi-bump",
     "start": "scripts/watch.sh",
-    "test": "mocha --compilers js:babel/register --recursive --watch test/*.js"
+    "test": "mocha --compilers js:babel/register --recursive test/*.js",
+    "test:watch": "mocha --compilers js:babel/register --recursive --watch test/*.js"
   },
   "repository": {
     "type": "git",
