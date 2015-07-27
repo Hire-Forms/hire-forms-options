@@ -127,7 +127,6 @@ class Options extends React.Component {
 		this.highlight(prev, this.props.highlightClass);
 	}
 
-
 	highlightNext() {
 		let next;
 		let current = this.unhighlight(this.props.highlightClass);

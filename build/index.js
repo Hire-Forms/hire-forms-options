@@ -57,21 +57,22 @@ exports.keyValueMapOrArrayOfKeyValueMaps = keyValueMapOrArrayOfKeyValueMaps;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
 exports.isListOfStrings = isListOfStrings;
 exports.isKeyValueMap = isKeyValueMap;
 exports.castArray = castArray;
+exports.castKeyValue = castKeyValue;
 exports.castKeyValueArray = castKeyValueArray;
 
 function isListOfStrings(list) {
-	if (!Array.isArray(list) || !list.length) {
-		return false;
-	}
+  if (!Array.isArray(list) || !list.length) {
+    return false;
+  }
 
-	return list.every(function (item) {
-		return typeof item === "string";
-	});
+  return list.every(function (item) {
+    return typeof item === "string";
+  });
 }
 
 /*
@@ -80,11 +81,11 @@ function isListOfStrings(list) {
  */
 
 function isKeyValueMap(map) {
-	if (map == null) {
-		return false;
-	}
+  if (map == null) {
+    return false;
+  }
 
-	return map.hasOwnProperty("key") && map.hasOwnProperty("value");
+  return map.hasOwnProperty("key") && map.hasOwnProperty("value");
 }
 
 /*
@@ -95,27 +96,36 @@ function isKeyValueMap(map) {
  */
 
 function castArray(arr) {
-	return Array.isArray(arr) ? arr : [arr];
+  return Array.isArray(arr) ? arr : [arr];
 }
 
 ;
 
 /*
+ * Always return a key/value map.
+ *
+ * @param {Number|String|Boolean|Object} item
+ * @returns {Array} Array of key value maps, ie: [{key: "A", value: "A"}, {key: "B", value: "B"}, ...]
+ */
+
+function castKeyValue(item) {
+  return isKeyValueMap(item) ? item : {
+    key: item,
+    value: item
+  };
+}
+
+/*
  * Always return an array of key/value maps.
  *
- * @param {Number|String|Boolean|Array} list
+ * @param {Number|String|Boolean|Array|Object} list
  * @returns {Array} Array of key value maps, ie: [{key: "A", value: "A"}, {key: "B", value: "B"}, ...]
  */
 
 function castKeyValueArray(list) {
-	list = castArray(list);
+  list = castArray(list);
 
-	return list.map(function (item) {
-		return isKeyValueMap(item) ? item : {
-			key: item,
-			value: item
-		};
-	});
+  return list.map(castKeyValue);
 }
 
 },{}],3:[function(require,module,exports){
@@ -130,11 +140,13 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var _react = require("react");
 
@@ -162,15 +174,13 @@ var hasKeyValue = function hasKeyValue(list, item) {
  */
 
 var Options = (function (_React$Component) {
+	_inherits(Options, _React$Component);
+
 	function Options() {
 		_classCallCheck(this, Options);
 
-		if (_React$Component != null) {
-			_React$Component.apply(this, arguments);
-		}
+		_get(Object.getPrototypeOf(Options.prototype), "constructor", this).apply(this, arguments);
 	}
-
-	_inherits(Options, _React$Component);
 
 	_createClass(Options, [{
 		key: "componentDidMount",
@@ -187,8 +197,6 @@ var Options = (function (_React$Component) {
 			var node = _react2["default"].findDOMNode(this);
 			node.style.zIndex = 0;
 		}
-	}, {
-		key: "sortRelevance",
 
 		/**
    * Sort values on relevance. A result is more relevant when the search
@@ -198,6 +206,8 @@ var Options = (function (_React$Component) {
    * @param {String} query A search query
    * @returns {Array<Object>} Sorted values on relevance
    */
+	}, {
+		key: "sortRelevance",
 		value: function sortRelevance(values, query) {
 			return values.sort(function (a, b) {
 				a = a.value.toLowerCase();
@@ -227,8 +237,6 @@ var Options = (function (_React$Component) {
 				return 0;
 			});
 		}
-	}, {
-		key: "highlight",
 
 		/*
    * highlight the currently highlighted option.
@@ -236,6 +244,8 @@ var Options = (function (_React$Component) {
    * @param {Object} target An HTMLElement or event object
    * @param {String} className Name of the highlight class
    */
+	}, {
+		key: "highlight",
 		value: function highlight(target, className) {
 			// Check if target is an event object.
 			if (target.hasOwnProperty("currentTarget")) {
@@ -244,8 +254,6 @@ var Options = (function (_React$Component) {
 
 			target.classList.add(className);
 		}
-	}, {
-		key: "unhighlight",
 
 		/**
    * Unhighlight the currently highlighted option.
@@ -253,6 +261,8 @@ var Options = (function (_React$Component) {
    * @param {String} className Name of the highlight class
    * @return {Object} The unhighlighted HTMLElement
    */
+	}, {
+		key: "unhighlight",
 		value: function unhighlight(className) {
 			var el = undefined;
 			var node = _react2["default"].findDOMNode(this);
@@ -319,8 +329,6 @@ var Options = (function (_React$Component) {
 				this.props.onChange(this.getOptionData(current));
 			}
 		}
-	}, {
-		key: "getOptionData",
 
 		/**
    * Get the key (id) and value (display name) of an option DOM element.
@@ -328,6 +336,8 @@ var Options = (function (_React$Component) {
    * @param {Object} el - Option DOM element
    * @returns {Object}
    */
+	}, {
+		key: "getOptionData",
 		value: function getOptionData(el) {
 			return {
 				key: el.getAttribute("data-key"),

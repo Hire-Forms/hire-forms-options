@@ -42,8 +42,8 @@ describe("Hire Forms Options", function() {
 				<Options
 					onChange={(response) => currentResponse = response}
 					values={[
-						{"key": "A", "value": "Jaap"}, 
-						{"key": "B", "value": "Schaap"}, 
+						{"key": "A", "value": "Jaap"},
+						{"key": "B", "value": "Schaap"},
 						{"key": "C", "value": "Aap"}]} />
 			);
 
@@ -71,46 +71,46 @@ describe("Hire Forms Options", function() {
 
 		it("Should highlight next when highlighNext() is called", function() {
 			renderedComponent.highlightNext();
-			listitems[0].getDOMNode().className.should.equal("highlight");
-			listitems[1].getDOMNode().className.should.equal("");
-			listitems[2].getDOMNode().className.should.equal("");
+			listitems[0].getDOMNode().className.should.equal("hire-forms-option highlight");
+			listitems[1].getDOMNode().className.should.equal("hire-forms-option");
+			listitems[2].getDOMNode().className.should.equal("hire-forms-option");
 
 			renderedComponent.highlightNext();
-			listitems[0].getDOMNode().className.should.equal("");
-			listitems[1].getDOMNode().className.should.equal("highlight");
-			listitems[2].getDOMNode().className.should.equal("");
+			listitems[0].getDOMNode().className.should.equal("hire-forms-option");
+			listitems[1].getDOMNode().className.should.equal("hire-forms-option highlight");
+			listitems[2].getDOMNode().className.should.equal("hire-forms-option");
 
 			renderedComponent.highlightNext();
-			listitems[0].getDOMNode().className.should.equal("");
-			listitems[1].getDOMNode().className.should.equal("");
-			listitems[2].getDOMNode().className.should.equal("highlight");
+			listitems[0].getDOMNode().className.should.equal("hire-forms-option");
+			listitems[1].getDOMNode().className.should.equal("hire-forms-option");
+			listitems[2].getDOMNode().className.should.equal("hire-forms-option highlight");
 
 			renderedComponent.highlightNext();
-			listitems[0].getDOMNode().className.should.equal("highlight");
-			listitems[1].getDOMNode().className.should.equal("");
-			listitems[2].getDOMNode().className.should.equal("");
+			listitems[0].getDOMNode().className.should.equal("hire-forms-option highlight");
+			listitems[1].getDOMNode().className.should.equal("hire-forms-option");
+			listitems[2].getDOMNode().className.should.equal("hire-forms-option");
 		});
 
 		it("Should highlight previous when highlighPrevious() is called", function() {
 			renderedComponent.highlightPrev();
-			listitems[0].getDOMNode().className.should.equal("");
-			listitems[1].getDOMNode().className.should.equal("");
-			listitems[2].getDOMNode().className.should.equal("highlight");
+			listitems[0].getDOMNode().className.should.equal("hire-forms-option");
+			listitems[1].getDOMNode().className.should.equal("hire-forms-option");
+			listitems[2].getDOMNode().className.should.equal("hire-forms-option highlight");
 
 			renderedComponent.highlightPrev();
-			listitems[0].getDOMNode().className.should.equal("");
-			listitems[1].getDOMNode().className.should.equal("highlight");
-			listitems[2].getDOMNode().className.should.equal("");
+			listitems[0].getDOMNode().className.should.equal("hire-forms-option");
+			listitems[1].getDOMNode().className.should.equal("hire-forms-option highlight");
+			listitems[2].getDOMNode().className.should.equal("hire-forms-option");
 
 			renderedComponent.highlightPrev();
-			listitems[0].getDOMNode().className.should.equal("highlight");
-			listitems[1].getDOMNode().className.should.equal("");
-			listitems[2].getDOMNode().className.should.equal("");
+			listitems[0].getDOMNode().className.should.equal("hire-forms-option highlight");
+			listitems[1].getDOMNode().className.should.equal("hire-forms-option");
+			listitems[2].getDOMNode().className.should.equal("hire-forms-option");
 
 			renderedComponent.highlightPrev();
-			listitems[0].getDOMNode().className.should.equal("");
-			listitems[1].getDOMNode().className.should.equal("");
-			listitems[2].getDOMNode().className.should.equal("highlight");
+			listitems[0].getDOMNode().className.should.equal("hire-forms-option");
+			listitems[1].getDOMNode().className.should.equal("hire-forms-option");
+			listitems[2].getDOMNode().className.should.equal("hire-forms-option highlight");
 		});
 	});
 
@@ -125,8 +125,8 @@ describe("Hire Forms Options", function() {
 					onChange={(response) => currentResponse = response}
 					query="aap"
 					values={[
-						{"key": "A", "value": "Jaap"}, 
-						{"key": "B", "value": "Schaap"}, 
+						{"key": "A", "value": "Jaap"},
+						{"key": "B", "value": "Schaap"},
 						{"key": "C", "value": "Aap"}]} />
 			);
 
