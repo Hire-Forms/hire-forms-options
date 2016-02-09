@@ -28,7 +28,7 @@ class Options extends React.Component {
 	}
 
 	componentWillUnmount() {
-		let node = React.findDOMNode(this);
+		let node = ReactDOM.findDOMNode(this);
 		node.style.zIndex = 0;
 	}
 
@@ -93,7 +93,7 @@ class Options extends React.Component {
 	 */
 	unhighlight(className) {
 		let el;
-		let node = React.findDOMNode(this);
+		let node = ReactDOM.findDOMNode(this);
 
 		if (node) {
 			el = node.querySelector(`li.${className}`);
@@ -122,7 +122,7 @@ class Options extends React.Component {
 		// Current is not found if there is no list item highlighted.
 		// Prev is not found if the first list item is highlighted.
 		if (!prev) {
-			prev = React.findDOMNode(this).lastChild;
+			prev = ReactDOM.findDOMNode(this).lastChild;
 		}
 
 		this.highlight(prev, this.props.highlightClass);
@@ -140,7 +140,7 @@ class Options extends React.Component {
 		// Current is not found if there is no list item highlighted.
 		// Next is not found if the last list item is highlighted.
 		if (!next) {
-			next = React.findDOMNode(this).firstChild;
+			next = ReactDOM.findDOMNode(this).firstChild;
 		}
 
 		this.highlight(next, this.props.highlightClass);
