@@ -2,6 +2,7 @@
 // Move util functions to seperate module
 
 import React from "react";
+import ReactDOM from "react-dom";
 import cx from "classnames";
 
 import {keyValueMapOrArrayOfKeyValueMaps, arrayOfKeyValueMaps} from "hire-forms-prop-types";
@@ -19,7 +20,7 @@ let hasKeyValue = function(list, item) {
  */
 class Options extends React.Component {
 	componentDidMount() {
-		let node = React.findDOMNode(this);
+		let node = ReactDOM.findDOMNode(this);
 
 		if (node) {
 			node.style.zIndex = 1000;

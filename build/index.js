@@ -155,6 +155,10 @@ var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactDom = require("react-dom");
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
 var _classnames = require("classnames");
 
 var _classnames2 = _interopRequireDefault(_classnames);
@@ -188,7 +192,7 @@ var Options = (function (_React$Component) {
 	_createClass(Options, [{
 		key: "componentDidMount",
 		value: function componentDidMount() {
-			var node = _react2["default"].findDOMNode(this);
+			var node = _reactDom2["default"].findDOMNode(this);
 
 			if (node) {
 				node.style.zIndex = 1000;
@@ -412,5 +416,5 @@ Options.propTypes = {
 exports["default"] = Options;
 module.exports = exports["default"];
 
-},{"classnames":"classnames","hire-forms-prop-types":1,"hire-forms-utils":2,"react":"react"}]},{},[3])(3)
+},{"classnames":"classnames","hire-forms-prop-types":1,"hire-forms-utils":2,"react":"react","react-dom":"react-dom"}]},{},[3])(3)
 });
