@@ -34,11 +34,11 @@
   },
   "dependencies": {
     "classlist-polyfill": "^1.0.2",
-    "hire-forms-prop-types": "^2.0.1",
+    "hire-forms-prop-types": "https://github.com/Hire-Forms/hire-forms-prop-types.git#react-0.14",
     "hire-forms-utils": "^1.1.0"
   },
   "peerDependencies": {
     "classnames": "^2.1.2",
-    "react": "^0.13.3"
+    "react": "^0.14.7"
   }
 }
