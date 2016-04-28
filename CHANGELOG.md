@@ -1,3 +1,14 @@
+### v2.0.0	(2016/4/28 13:53)
+* bumped react version in devdeps
+* using reactdom to locate a dom node
+* using react-dom to find a dom node
+* branch to react 0.14
+* Remove coverall badge
+* Add travis & coverall badges
+* Add an npm run test:watch command, so Travis can use npm test
+* Add babel dev dep for mocha
+* Trigger Travis build
+
 ### v1.1.1	(2015/7/27 17:15)
 * Fix test: add hire-forms-option class
 * Remove babel, which should be a global dep
