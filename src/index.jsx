@@ -5,8 +5,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import cx from "classnames";
 
-import {keyValueMapOrArrayOfKeyValueMaps, arrayOfKeyValueMaps} from "hire-forms-prop-types";
-import {castArray} from "hire-forms-utils";
+import { keyValueMapOrArrayOfKeyValueMaps, arrayOfKeyValueMaps } from "hire-forms-prop-types";
+import { castArray } from "hire-forms-utils";
 
 let hasKeyValue = function(list, item) {
 	return list.filter((li) => li.key === item.key).length > 0;
@@ -20,7 +20,7 @@ let hasKeyValue = function(list, item) {
  */
 class Options extends React.Component {
 	componentDidMount() {
-		let node = ReactDOM.findDOMNode(this);
+		const node = ReactDOM.findDOMNode(this);
 
 		if (node) {
 			node.style.zIndex = 1000;
@@ -28,7 +28,7 @@ class Options extends React.Component {
 	}
 
 	componentWillUnmount() {
-		let node = ReactDOM.findDOMNode(this);
+		const node = ReactDOM.findDOMNode(this);
 		node.style.zIndex = 0;
 	}
 
@@ -36,7 +36,7 @@ class Options extends React.Component {
 	 * Sort values on relevance. A result is more relevant when the search
 	 * query is more at the beginning of the string. In other words:
 	 * String.indexOf(props.query): lower is better.
-	 * @param {Array<Object>} value An array of key/value maps
+	 * @param {Array<Object>} value An array of key/value maps
 	 * @param {String} query A search query
 	 * @returns {Array<Object>} Sorted values on relevance
 	 */
@@ -180,17 +180,17 @@ class Options extends React.Component {
 			let displayValue = data.value;
 
 			if (this.props.query.length) {
-				let re = new RegExp(this.props.query, "ig");
-				displayValue = data.value.replace(re, "<span class=\"highlight\">$&</span>");
+				const re = new RegExp(this.props.query, 'ig');
+				displayValue = data.value.replace(re, '<span class="highlight">$&</span>');
 			}
 
 			return (
 				<li
 					className={cx({
-						"hire-forms-option": true,
-						selected: hasKeyValue(castArray(this.props.value), data)
+						'hire-forms-option': true,
+						selected: hasKeyValue(castArray(this.props.value), data),
 					})}
-					dangerouslySetInnerHTML={{__html: displayValue}}
+					dangerouslySetInnerHTML={{ __html: displayValue }}
 					data-key={data.key}
 					data-value={data.value}
 					key={index}
@@ -199,9 +199,15 @@ class Options extends React.Component {
 			);
 		});
 
+		const children = this.props.children != null ?
+			<li>{this.props.children}</li> :
+			null;
+
 		return (
 			<ul
-				className="hire-options">
+				className="hire-options"
+			>
+				{children}
 				{listitems}
 			</ul>
 		);
@@ -209,16 +215,17 @@ class Options extends React.Component {
 }
 
 Options.defaultProps = {
-	highlightClass: "highlight",
-	query: "",
+	highlightClass: 'highlight',
+	query: '',
 	sort: false,
 	sortRelevance: true,
-	value: {key: "", value: ""},
-	values: []
+	value: { key: '', value: '' },
+	values: [],
 };
 
 
 Options.propTypes = {
+	children: React.PropTypes.node,
 	highlightClass: React.PropTypes.string,
 	onChange: React.PropTypes.func.isRequired,
 	query: React.PropTypes.string,

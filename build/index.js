@@ -209,7 +209,7 @@ var Options = (function (_React$Component) {
    * Sort values on relevance. A result is more relevant when the search
    * query is more at the beginning of the string. In other words:
    * String.indexOf(props.query): lower is better.
-   * @param {Array<Object>} value An array of key/value maps
+   * @param {Array<Object>} value An array of key/value maps
    * @param {String} query A search query
    * @returns {Array<Object>} Sorted values on relevance
    */
@@ -366,13 +366,13 @@ var Options = (function (_React$Component) {
 				var displayValue = data.value;
 
 				if (_this.props.query.length) {
-					var re = new RegExp(_this.props.query, "ig");
-					displayValue = data.value.replace(re, "<span class=\"highlight\">$&</span>");
+					var re = new RegExp(_this.props.query, 'ig');
+					displayValue = data.value.replace(re, '<span class="highlight">$&</span>');
 				}
 
 				return _react2["default"].createElement("li", {
 					className: (0, _classnames2["default"])({
-						"hire-forms-option": true,
+						'hire-forms-option': true,
 						selected: hasKeyValue((0, _hireFormsUtils.castArray)(_this.props.value), data)
 					}),
 					dangerouslySetInnerHTML: { __html: displayValue },
@@ -382,10 +382,18 @@ var Options = (function (_React$Component) {
 					onClick: _this.handleClick.bind(_this) });
 			});
 
+			var children = this.props.children != null ? _react2["default"].createElement(
+				"li",
+				null,
+				this.props.children
+			) : null;
+
 			return _react2["default"].createElement(
 				"ul",
 				{
-					className: "hire-options" },
+					className: "hire-options"
+				},
+				children,
 				listitems
 			);
 		}
@@ -395,15 +403,16 @@ var Options = (function (_React$Component) {
 })(_react2["default"].Component);
 
 Options.defaultProps = {
-	highlightClass: "highlight",
-	query: "",
+	highlightClass: 'highlight',
+	query: '',
 	sort: false,
 	sortRelevance: true,
-	value: { key: "", value: "" },
+	value: { key: '', value: '' },
 	values: []
 };
 
 Options.propTypes = {
+	children: _react2["default"].PropTypes.node,
 	highlightClass: _react2["default"].PropTypes.string,
 	onChange: _react2["default"].PropTypes.func.isRequired,
 	query: _react2["default"].PropTypes.string,
