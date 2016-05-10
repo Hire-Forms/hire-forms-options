@@ -1,3 +1,7 @@
+### v2.1.0	(2016/5/10 7:47)
+* Render optional children as first option
+* Bump eslint
+
 ### v2.0.0	(2016/4/28 13:53)
 * bumped react version in devdeps
 * using reactdom to locate a dom node
