@@ -1,3 +1,6 @@
+### v2.1.1	(2016/5/19 14:39)
+* Bump packages and code clean up
+
 ### v2.1.0	(2016/5/10 7:47)
 * Render optional children as first option
 * Bump eslint
