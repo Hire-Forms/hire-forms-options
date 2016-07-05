@@ -1,3 +1,7 @@
+### v2.2.0	(2016/7/5 7:53)
+* Add custom option component
+* Bump packages
+
 ### v2.1.1	(2016/5/19 14:39)
 * Bump packages and code clean up
 
