@@ -1,3 +1,6 @@
+### v2.2.1	(2016/7/29 12:21)
+* Return correct data when option is clicked
+
 ### v2.2.0	(2016/7/5 7:53)
 * Add custom option component
 * Bump packages
