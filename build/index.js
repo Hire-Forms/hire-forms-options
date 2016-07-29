@@ -96,6 +96,9 @@ var Options = function (_React$Component) {
 		return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Options)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
 			activeIndex: null,
 			values: _this.props.values
+		}, _this.select = function () {
+			if (_this.state.activeIndex == null) return;
+			_this.props.onSelect(_this.state.values[_this.state.activeIndex]);
 		}, _temp), _possibleConstructorReturn(_this, _ret);
 	}
 
@@ -144,12 +147,6 @@ var Options = function (_React$Component) {
 			this.setState({ activeIndex: activeIndex });
 		}
 	}, {
-		key: 'select',
-		value: function select() {
-			if (this.state.activeIndex == null) return;
-			this.props.onSelect(this.state.values[this.state.activeIndex]);
-		}
-	}, {
 		key: 'render',
 		value: function render() {
 			var _this2 = this;
@@ -161,8 +158,15 @@ var Options = function (_React$Component) {
 			var listitems = this.state.values.map(function (data, index) {
 				return _react2.default.createElement(_option2.default, _extends({}, _this2.props, {
 					active: _this2.state.activeIndex === index,
+					key: index,
 					optionData: data,
-					key: index
+					onClick: function onClick() {
+						return _this2.setState({ activeIndex: index }, // When an option is clicked, the activeIndex is set
+						function () {
+							return _this2.select();
+						} // After setting the activeIndex, this.select is called
+						);
+					}
 				}));
 			});
 
@@ -239,22 +243,9 @@ var Option = function (_Component) {
 	_inherits(Option, _Component);
 
 	function Option() {
-		var _Object$getPrototypeO;
-
-		var _temp, _this, _ret;
-
 		_classCallCheck(this, Option);
 
-		for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-			args[_key] = arguments[_key];
-		}
-
-		return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Option)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.handleClick = function () /* ev */{
-			_this.props.onSelect({
-				key: _this.props.optionData.key,
-				value: _this.props.optionData.value
-			});
-		}, _temp), _possibleConstructorReturn(_this, _ret);
+		return _possibleConstructorReturn(this, Object.getPrototypeOf(Option).apply(this, arguments));
 	}
 
 	_createClass(Option, [{
@@ -269,11 +260,11 @@ var Option = function (_Component) {
 
 			var option = this.props.optionComponent != null ? _react2.default.createElement(this.props.optionComponent, _extends({}, this.props, {
 				displayValue: displayValue,
-				onClick: this.handleClick
+				onClick: this.props.onClick
 			})) : _react2.default.createElement('li', {
 				className: (0, _classnames2.default)('hire-forms-option', { highlight: this.props.active }),
 				dangerouslySetInnerHTML: { __html: displayValue },
-				onClick: this.handleClick
+				onClick: this.props.onClick
 			});
 
 			return option;
@@ -291,7 +282,7 @@ Option.propTypes = {
 	highlightClass: _react.PropTypes.string,
 	optionComponent: _react.PropTypes.func,
 	optionData: _react.PropTypes.object,
-	onSelect: _react.PropTypes.func,
+	onClick: _react.PropTypes.func,
 	query: _react.PropTypes.string,
 	value: _react.PropTypes.object
 };

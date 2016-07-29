@@ -51,11 +51,10 @@ class Options extends React.Component {
 		this.setState({ activeIndex });
 	}
 
-	select() {
+	select = () => {
 		if (this.state.activeIndex == null) return;
 		this.props.onSelect(this.state.values[this.state.activeIndex]);
 	}
-
 
 	render() {
 		if (this.state.values.length === 0 && this.props.children == null) {
@@ -66,8 +65,14 @@ class Options extends React.Component {
 			<Option
 				{...this.props}
 				active={this.state.activeIndex === index}
-				optionData={data}
 				key={index}
+				optionData={data}
+				onClick={
+					() => this.setState(
+						{ activeIndex: index }, // When an option is clicked, the activeIndex is set
+						() => this.select() // After setting the activeIndex, this.select is called
+					)
+				}
 			/>
 		);
 
