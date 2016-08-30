@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "classlist-polyfill": "^1.0.2",
-    "hire-forms-prop-types": "https://github.com/Hire-Forms/hire-forms-prop-types.git#react-0.14",
+    "hire-forms-prop-types": "git+https://github.com/Hire-Forms/hire-forms-prop-types.git#react-0.14",
     "hire-forms-utils": "^1.1.0"
   },
   "peerDependencies": {
