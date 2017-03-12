@@ -1,3 +1,6 @@
+### v2.2.3	(2017/3/12 8:50)
+* Remove unused deps
+
 ### v2.2.2	(2017/3/12 8:48)
 * Move to typescript
 
