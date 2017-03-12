@@ -34,7 +34,7 @@ const sortOnAlphabet = (a, b) => {
 	return 0;
 };
 
-export const sortValues = ({ query, sortOn, values }) => {
+export const sortValues = (query, sortOn, values) => {
 	let sortedValues = values;
 
 	if (sortOn === 'alphabet') {

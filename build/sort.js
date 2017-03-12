@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const sortOnRelevance = (values, query) => values.sort((a, b) => {
     a = a.value.toLowerCase();
     b = b.value.toLowerCase();
@@ -25,7 +26,7 @@ const sortOnAlphabet = (a, b) => {
         return -1;
     return 0;
 };
-exports.sortValues = ({ query, sortOn, values }) => {
+exports.sortValues = (query, sortOn, values) => {
     let sortedValues = values;
     if (sortOn === 'alphabet') {
         sortedValues = sortedValues.sort(sortOnAlphabet);

@@ -8,12 +8,12 @@ export interface IKeyValue {
 }
 
 interface IProps {
-	highlightClass: string;
+	highlightClass?: string;
 	onSelect?: (option: IKeyValue) => void;
-	query: string;
-	sortOn: string;
-	value: IKeyValue;
-	values: IKeyValue[];
+	query?: string;
+	sortOn?: string;
+	value?: IKeyValue;
+	values?: IKeyValue[];
 }
 
 interface IState {
@@ -27,21 +27,21 @@ class Options extends React.Component<IProps, IState> {
 		values: this.props.values,
 	};
 
-
-	public static defaultProps: IProps = {
+	public static defaultProps: Partial<IProps> = {
 		highlightClass: 'highlight',
 		query: '',
-		sortOn: null,
 		value: { key: '', value: '' },
 		values: [],
 	};
 
 	componentWillMount() {
-		this.setState({ values: sortValues(this.props) });
+		const { query, sortOn, values} = this.props;
+		this.setState({ values: sortValues(query, sortOn, values) });
 	}
 
 	componentWillReceiveProps(nextProps) {
-		this.setState({ values: sortValues(nextProps) });
+		const { query, sortOn, values} = nextProps;
+		this.setState({ values: sortValues(query, sortOn, values) });
 	}
 
 	highlightPrev() {
