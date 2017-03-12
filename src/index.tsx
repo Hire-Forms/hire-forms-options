@@ -1,30 +1,47 @@
-import React from 'react';
+import * as React from 'react';
 import Option from './option';
 import { sortValues } from './sort';
-import { keyValueMapOrArrayOfKeyValueMaps, arrayOfKeyValueMaps } from 'hire-forms-prop-types';
 
-class Options extends React.Component {
-	state = {
+export interface IKeyValue {
+	key: string | number;
+	value: string;
+}
+
+interface IProps {
+	highlightClass: string;
+	onSelect?: (option: IKeyValue) => void;
+	query: string;
+	sortOn: string;
+	value: IKeyValue;
+	values: IKeyValue[];
+}
+
+interface IState {
+	activeIndex: number;
+	values: IKeyValue[];
+}
+
+class Options extends React.Component<IProps, IState> {
+	public state: IState = {
 		activeIndex: null,
 		values: this.props.values,
-	}
+	};
+
+
+	public static defaultProps: IProps = {
+		highlightClass: 'highlight',
+		query: '',
+		sortOn: null,
+		value: { key: '', value: '' },
+		values: [],
+	};
 
 	componentWillMount() {
 		this.setState({ values: sortValues(this.props) });
 	}
 
-	componentDidMount() {
-		const node = this.refs.options;
-		if (node) node.style.zIndex = 1000;
-	}
-
 	componentWillReceiveProps(nextProps) {
 		this.setState({ values: sortValues(nextProps) });
-	}
-
-	componentWillUnmount() {
-		const node = this.refs.options;
-		if (node) node.style.zIndex = 0;
 	}
 
 	highlightPrev() {
@@ -61,12 +78,12 @@ class Options extends React.Component {
 			return null;
 		}
 
-		const listitems = this.state.values.map((data, index) =>
+		const listitems = this.state.values.map((optionData, index) =>
 			<Option
 				{...this.props}
 				active={this.state.activeIndex === index}
 				key={index}
-				optionData={data}
+				optionData={optionData}
 				onClick={
 					() => this.setState(
 						{ activeIndex: index }, // When an option is clicked, the activeIndex is set
@@ -83,7 +100,11 @@ class Options extends React.Component {
 		return (
 			<ul
 				className="hire-options"
-				ref="options"
+			  ref={(node: HTMLElement) => {
+			    if (node != null) {
+						node.style.zIndex = '1000';
+					}
+			  }}
 			>
 				{children}
 				{listitems}
@@ -92,24 +113,16 @@ class Options extends React.Component {
 	}
 }
 
-Options.defaultProps = {
-	highlightClass: 'highlight',
-	query: '',
-	sortOn: null,
-	value: { key: '', value: '' },
-	values: [],
-};
 
-
-Options.propTypes = {
-	children: React.PropTypes.node,
-	highlightClass: React.PropTypes.string,
-	onSelect: React.PropTypes.func.isRequired,
-	optionComponent: React.PropTypes.func,
-	query: React.PropTypes.string,
-	sortOn: React.PropTypes.oneOf([null, 'alphabet', 'relevance']),
-	value: keyValueMapOrArrayOfKeyValueMaps,
-	values: arrayOfKeyValueMaps,
-};
+// Options.propTypes = {
+// 	children: React.PropTypes.node,
+// 	highlightClass: React.PropTypes.string,
+// 	onSelect: React.PropTypes.func.isRequired,
+// 	optionComponent: React.PropTypes.func,
+// 	query: React.PropTypes.string,
+// 	sortOn: React.PropTypes.oneOf([null, 'alphabet', 'relevance']),
+// 	value: keyValueMapOrArrayOfKeyValueMaps,
+// 	values: arrayOfKeyValueMaps,
+// };
 
 export default Options;
