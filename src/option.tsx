@@ -1,39 +1,36 @@
 import * as React from 'react';
 import * as cx from 'classnames';
-import {IKeyValue} from "./index";
+import { IOptionComponentProps, ICommonOptionComponentProps } from "./index";
 
-interface IProps {
-	active: boolean;
+interface IProps extends ICommonOptionComponentProps {
 	highlightClass: string;
-	onClick: () => void;
-	optionComponent?: any;
-	optionData: IKeyValue;
+	optionComponent?: React.StatelessComponent<IOptionComponentProps>;
 	query: string;
 }
 
 export default (props: IProps) => {
-	let displayValue = props.optionData.value;
+	const { active, highlightClass, onClick, optionComponent, optionData, query } = props;
 
-	if (props.query.length) {
-		const re = new RegExp(props.query, 'ig');
-		displayValue = props.optionData.value.replace(
-			re,
-			`<span class="${props.highlightClass}">$&</span>`
-		);
-	}
+	const displayValue = (query.length) ?
+		optionData.value.replace(
+			(new RegExp(query, 'ig')),
+			`<span class="${highlightClass}">$&</span>`
+		) :
+		optionData.value;
 
-	return (props.optionComponent != null) ?
+	return (optionComponent != null) ?
 		<props.optionComponent
-			{...props}
+			active={active}
 			displayValue={displayValue}
-			onClick={props.onClick}
+			onClick={onClick}
+		  optionData={optionData}
 		/> :
 		<li
 			className={cx(
 				'hire-forms-option',
-				{ highlight: props.active }
+				{ highlight: active }
 			)}
 			dangerouslySetInnerHTML={{ __html: displayValue }}
-			onClick={props.onClick}
+			onClick={onClick}
 		/>;
 }

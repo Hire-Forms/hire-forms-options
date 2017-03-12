@@ -2,7 +2,7 @@ import * as React from 'react';
 import Option from './option';
 import { sortValues } from './sort';
 
-export interface IKeyValue {
+interface IKeyValue {
 	key: string | number;
 	value: string;
 }
@@ -10,6 +10,7 @@ export interface IKeyValue {
 interface IProps {
 	highlightClass?: string;
 	onSelect?: (option: IKeyValue) => void;
+	optionComponent?: React.StatelessComponent<IOptionComponentProps>;
 	query?: string;
 	sortOn?: string;
 	value?: IKeyValue;
@@ -71,7 +72,7 @@ class Options extends React.Component<IProps, IState> {
 	select = () => {
 		if (this.state.activeIndex == null) return;
 		this.props.onSelect(this.state.values[this.state.activeIndex]);
-	}
+	};
 
 	render() {
 		if (this.state.values.length === 0 && this.props.children == null) {
@@ -87,7 +88,7 @@ class Options extends React.Component<IProps, IState> {
 				onClick={
 					() => this.setState(
 						{ activeIndex: index }, // When an option is clicked, the activeIndex is set
-						() => this.select() // After setting the activeIndex, this.select is called
+						() => this.select() // this.select uses the activeIndex to return the active value
 					)
 				}
 			/>
@@ -113,16 +114,14 @@ class Options extends React.Component<IProps, IState> {
 	}
 }
 
+export interface ICommonOptionComponentProps {
+	active: boolean;
+	onClick: () => void;
+	optionData: IKeyValue;
+}
 
-// Options.propTypes = {
-// 	children: React.PropTypes.node,
-// 	highlightClass: React.PropTypes.string,
-// 	onSelect: React.PropTypes.func.isRequired,
-// 	optionComponent: React.PropTypes.func,
-// 	query: React.PropTypes.string,
-// 	sortOn: React.PropTypes.oneOf([null, 'alphabet', 'relevance']),
-// 	value: keyValueMapOrArrayOfKeyValueMaps,
-// 	values: arrayOfKeyValueMaps,
-// };
+export interface IOptionComponentProps extends ICommonOptionComponentProps {
+	displayValue: string;
+}
 
 export default Options;
