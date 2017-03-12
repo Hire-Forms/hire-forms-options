@@ -1,3 +1,6 @@
+### v2.2.2	(2017/3/12 8:48)
+* Move to typescript
+
 ### v2.2.1	(2016/7/29 12:21)
 * Return correct data when option is clicked
 
