@@ -2,12 +2,12 @@ import * as React from 'react';
 import Option from './option';
 import { sortValues } from './sort';
 
-interface IKeyValue {
+export interface IKeyValue {
 	key: string | number;
 	value: string;
 }
 
-interface IProps {
+export interface IProps {
 	highlightClass?: string;
 	onSelect?: (option: IKeyValue) => void;
 	optionComponent?: React.StatelessComponent<IOptionComponentProps>;
@@ -17,7 +17,7 @@ interface IProps {
 	values?: IKeyValue[];
 }
 
-interface IState {
+export interface IState {
 	activeIndex: number;
 	values: IKeyValue[];
 }

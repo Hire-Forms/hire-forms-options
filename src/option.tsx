@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as cx from 'classnames';
 import { IOptionComponentProps, ICommonOptionComponentProps } from "./index";
 
-interface IProps extends ICommonOptionComponentProps {
+export interface IProps extends ICommonOptionComponentProps {
 	highlightClass?: string;
 	optionComponent?: React.StatelessComponent<IOptionComponentProps>;
 	query?: string;
