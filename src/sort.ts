@@ -1,3 +1,5 @@
+import { SortTypes } from ".";
+
 /**
  * Sort values on relevance. A result is more relevant when the search
  * query is more at the beginning of the string. In other words:
@@ -34,7 +36,7 @@ const sortOnAlphabet = (a, b) => {
 	return 0;
 };
 
-export const sortValues = (query, sortOn, values) => {
+export const sortValues = (query, sortOn: SortTypes, values) => {
 	let sortedValues = values;
 
 	if (sortOn === 'alphabet') {

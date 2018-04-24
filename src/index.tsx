@@ -12,7 +12,7 @@ export interface IProps {
 	onSelect?: (option: IKeyValue) => void;
 	optionComponent?: React.StatelessComponent<IOptionComponentProps>;
 	query?: string;
-	sortOn?: string;
+	sortOn?: SortTypes;
 	value?: IKeyValue;
 	values?: IKeyValue[];
 }
@@ -86,10 +86,12 @@ class Options extends React.Component<IProps, IState> {
 				key={index}
 				optionData={optionData}
 				onClick={
-					() => this.setState(
-						{ activeIndex: index }, // When an option is clicked, the activeIndex is set
-						() => this.select() // this.select uses the activeIndex to return the active value
-					)
+					() => {
+						this.setState(
+							{ activeIndex: index }, // When an option is clicked, the activeIndex is set
+							() => this.select() // this.select uses the activeIndex to return the active value
+						)
+					}
 				}
 			/>
 		);
@@ -123,5 +125,7 @@ export interface ICommonOptionComponentProps {
 export interface IOptionComponentProps extends ICommonOptionComponentProps {
 	displayValue: string;
 }
+
+export type SortTypes = 'alphabet' | 'relevance'
 
 export default Options;

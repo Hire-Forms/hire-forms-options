@@ -1,1 +1,2 @@
-export declare const sortValues: (query: any, sortOn: any, values: any) => any;
+import { SortTypes } from ".";
+export declare const sortValues: (query: any, sortOn: SortTypes, values: any) => any;

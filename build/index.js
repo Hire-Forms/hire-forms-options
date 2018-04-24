@@ -46,7 +46,9 @@ class Options extends React.Component {
         if (this.state.values.length === 0 && this.props.children == null) {
             return null;
         }
-        const listitems = this.state.values.map((optionData, index) => React.createElement(option_1.default, Object.assign({}, this.props, { active: this.state.activeIndex === index, key: index, optionData: optionData, onClick: () => this.setState({ activeIndex: index }, () => this.select()) })));
+        const listitems = this.state.values.map((optionData, index) => React.createElement(option_1.default, Object.assign({}, this.props, { active: this.state.activeIndex === index, key: index, optionData: optionData, onClick: () => {
+                this.setState({ activeIndex: index }, () => this.select());
+            } })));
         const children = this.props.children != null ?
             React.createElement("li", { className: "children" }, this.props.children) :
             null;

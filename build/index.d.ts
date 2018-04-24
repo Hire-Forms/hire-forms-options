@@ -9,7 +9,7 @@ export interface IProps {
     onSelect?: (option: IKeyValue) => void;
     optionComponent?: React.StatelessComponent<IOptionComponentProps>;
     query?: string;
-    sortOn?: string;
+    sortOn?: SortTypes;
     value?: IKeyValue;
     values?: IKeyValue[];
 }
@@ -35,4 +35,5 @@ export interface ICommonOptionComponentProps {
 export interface IOptionComponentProps extends ICommonOptionComponentProps {
     displayValue: string;
 }
+export declare type SortTypes = 'alphabet' | 'relevance';
 export default Options;
