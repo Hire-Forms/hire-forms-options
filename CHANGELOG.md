@@ -1,3 +1,8 @@
+### v2.2.6	(2018/4/24 13:23)
+* Add SortTypes
+* Update deps and move react to peerDeps
+* Bump deps
+
 ### v2.2.5	(2017/3/12 13:5)
 * Add optional optionComponent
 
